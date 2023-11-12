@@ -13,4 +13,5 @@ public class Gerente extends Pessoa{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
 }

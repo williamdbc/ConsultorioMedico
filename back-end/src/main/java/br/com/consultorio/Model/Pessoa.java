@@ -1,7 +1,9 @@
 package br.com.consultorio.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.Data;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.Date;
 
@@ -23,13 +25,15 @@ public class Pessoa {
     @OneToOne(mappedBy = "endereco", cascade = CascadeType.ALL)
     private Endereco endereco;
 
-    @Column //@CPF
+    @Column
+    @CPF
     private String CPF;
 
     @Temporal(value = TemporalType.DATE)
     private Date data_nascimento;
 
-    @Column(length = 100) //@Email
+    @Column(length = 100)
+    @Email
     private String email;
 
 }

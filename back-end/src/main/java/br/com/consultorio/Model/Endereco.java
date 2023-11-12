@@ -11,7 +11,7 @@ public class Endereco {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column //@CEP
+    @Column
     private String CEP;
 
     @Column

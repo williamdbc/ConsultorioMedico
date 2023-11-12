@@ -1,5 +1,6 @@
 package br.com.consultorio.Model;
 
+import br.com.consultorio.Enumeration.ConsultaEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,9 +16,12 @@ public class Consulta {
     private Agendamento agendamento;
 
     @Column
-    private String motivo_consulta;
+    private String sintomas;
 
     @Column
-    private String resultado_consulta;
+    private String diagnostico;
+
+    @Enumerated(EnumType.STRING)
+    private ConsultaEnum status_consulta;
 
 }

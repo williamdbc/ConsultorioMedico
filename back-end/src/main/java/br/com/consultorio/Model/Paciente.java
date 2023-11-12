@@ -10,4 +10,7 @@ public class Paciente extends Pessoa{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column
+    private boolean plano_saude;
 }

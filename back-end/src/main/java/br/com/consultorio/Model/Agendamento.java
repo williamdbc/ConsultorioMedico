@@ -8,7 +8,8 @@ import java.sql.Timestamp;
 @Entity
 public class Agendamento {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -25,5 +26,8 @@ public class Agendamento {
 
     @ManyToOne
     private Recepcionista recepcionista;
+
+    @Column
+    private double valor_consulta;
 
 }
