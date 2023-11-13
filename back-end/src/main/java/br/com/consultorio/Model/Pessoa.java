@@ -22,7 +22,8 @@ public class Pessoa {
     @Column(length = 11)
     private String telefone;
 
-    @OneToOne(mappedBy = "endereco", cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "id_endereco")
     private Endereco endereco;
 
     @Column

@@ -13,6 +13,7 @@ public class Consulta {
     private Long id;
 
     @OneToOne
+    @JoinColumn(name = "id_agendamento")
     private Agendamento agendamento;
 
     @Column

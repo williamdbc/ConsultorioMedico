@@ -17,9 +17,10 @@ public class Medico extends Pessoa{
     private String CRM;
 
     @ManyToOne
+    @JoinColumn(name = "id_especializacao")
     private Especializacao especializacao;
 
-    @OneToMany
+    @OneToMany(mappedBy = "medico")
     private List<Agendamento> agendamentos;
 
 }

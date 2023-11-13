@@ -28,9 +28,8 @@ public class Endereco {
 
     @Column
     private int numero;
-
-    @OneToOne
-    @JoinColumn(name = "id_endereco")
-    private Pessoa pessoa;
+    
+    //@OneToOne(cascade = CascadeType.ALL, mappedBy = "endereco")
+    //private Pessoa pessoa;
 
 }

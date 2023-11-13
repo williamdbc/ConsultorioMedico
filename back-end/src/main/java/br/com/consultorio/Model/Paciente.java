@@ -3,6 +3,8 @@ package br.com.consultorio.Model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 public class Paciente extends Pessoa{
@@ -13,4 +15,7 @@ public class Paciente extends Pessoa{
 
     @Column
     private boolean plano_saude;
+    
+    @OneToMany(mappedBy = "paciente")
+    private List<Agendamento> agendamentos;
 }

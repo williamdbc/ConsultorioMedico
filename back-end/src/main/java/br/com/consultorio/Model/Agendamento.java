@@ -19,12 +19,15 @@ public class Agendamento {
     private Timestamp data_hora_fim;
 
     @ManyToOne
+    @JoinColumn(name = "id_medico")
     private Medico medico;
 
     @ManyToOne
+    @JoinColumn(name = "id_paciente")
     private Paciente paciente;
 
     @ManyToOne
+    @JoinColumn(name = "id_recepcionista")
     private Recepcionista recepcionista;
 
     @Column
