@@ -36,6 +36,7 @@ export class CreateGenericComponent implements OnInit{
   }
 
   ngOnInit() {
+    console.log('nomeEntidade', this.nomeEntidade);
     this.form = this.fb.group({});
 
     this.atributos.forEach((atributo) => {
@@ -48,7 +49,6 @@ export class CreateGenericComponent implements OnInit{
     }else{
       this.getAllEntidades();
     }
-
 
   }
 
@@ -129,7 +129,7 @@ export class CreateGenericComponent implements OnInit{
       this.submitted = true;
     }
   }
-  
+
 
   getAllAtores(){
     this.consultasService.getAll('/atores').subscribe(resp => {

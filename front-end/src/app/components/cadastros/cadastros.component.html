@@ -1,3 +1,17 @@
+<ng-container *ngIf="nomeEntidade == 'Agendamentos'">
+  <div class="card mt-2">
+    <div style="display: flex; gap: 1rem;">
+      <h3 style="position: relative; bottom: 7px;">Data Inicial:</h3>
+      <p-calendar [(ngModel)]="dataInicial" [showIcon]="true"></p-calendar>
+
+      <h3 style="position: relative; bottom: 7px;">Data Final:</h3>
+      <p-calendar [(ngModel)]="dataFinal" [showIcon]="true"></p-calendar>
+
+      <p-button (click)="aplicarFiltro()">Filtrar</p-button>
+    </div>
+  </div>
+</ng-container>
+
 <div class="flex flex-row justify-between align-center">
   <h1>{{nomeEntidade}}</h1>
   <p-button label="Cadastrar" styleClass="p-button-success" (onClick)="openModal()"></p-button>

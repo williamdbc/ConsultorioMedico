@@ -17,6 +17,8 @@ export class CadastrosComponent implements OnInit{
   openDialog: boolean = false;
   idEntidade: number = 0;
   rota: string = '';
+  dataInicial: Date = new Date();
+  dataFinal: Date = new Date();
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -33,12 +35,14 @@ export class CadastrosComponent implements OnInit{
     });
 
 
-    this.consultasService.getAll(this.rota).subscribe(resp => {
-      if(resp){
-        this.results = resp;
-      }
-    });
+    // this.consultasService.getAll(this.rota).subscribe(resp => {
+    //   if(resp){
+    //     this.results = resp;
+    //   }
+    // });
   }
+
+  aplicarFiltro(){}
 
   getNome(tipo: string): string{
     let nome = '';
@@ -124,10 +128,12 @@ export class CadastrosComponent implements OnInit{
         break;
       case 'Paciente':
         cols = [
-          { field: 'numSerie', header: 'Número da Série', type: 'number', isShow: true},
-          { field: 'titulo', header: 'Título', type: 'titulo', isShow: false},
-          { field: 'dtAquisicao', header: 'Data de Aquisição', type: 'date'  , isShow: true},
-          { field: 'tipoItem', header: 'Tipo Item', type: 'text', isShow: true},
+          { field: 'nome_completo', header: 'Nome', type: 'text' , isShow: true},
+          { field: 'telefone', header: 'Telefone', type: 'text' , isShow: true},
+          { field: 'endereco', header: 'Endereço', type: 'text' , isShow: true},
+          { field: 'cpf', header: 'CPF', type: 'text' , isShow: true},
+          { field: 'data_nascimento', header: 'Data de Nascimento', type: 'date' , isShow: true},
+          { field: 'plano_saude', header: 'Plano de Saúde', type: 'text' , isShow: true},
         ];
         break;
     }
