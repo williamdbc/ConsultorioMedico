@@ -2,6 +2,7 @@ package br.com.consultorio.Model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 @Data
 @Entity

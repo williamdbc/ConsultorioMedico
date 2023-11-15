@@ -2,13 +2,18 @@ package br.com.consultorio.Model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.Date;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Pessoa {
 
@@ -27,14 +32,14 @@ public class Pessoa {
     private Endereco endereco;
 
     @Column
-    @CPF
+    @CPF(message = "CPF inválido.")
     private String CPF;
 
     @Temporal(value = TemporalType.DATE)
     private Date data_nascimento;
 
     @Column(length = 100)
-    @Email
+    @Email(message = "Email inválido.")
     private String email;
 
 }

@@ -1,7 +1,11 @@
 package br.com.consultorio.Model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -22,5 +26,6 @@ public class Medico extends Pessoa{
 
     @OneToMany(mappedBy = "medico")
     private List<Agendamento> agendamentos;
+
 
 }
