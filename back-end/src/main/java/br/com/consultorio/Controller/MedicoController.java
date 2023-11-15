@@ -1,6 +1,5 @@
 package br.com.consultorio.Controller;
 
-import br.com.consultorio.Model.Medico;
 import br.com.consultorio.Record.MedicoRecord;
 import br.com.consultorio.Service.MedicoService;
 import jakarta.validation.Valid;

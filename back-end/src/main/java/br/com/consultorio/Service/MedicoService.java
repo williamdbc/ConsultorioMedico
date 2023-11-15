@@ -37,7 +37,7 @@ public class MedicoService {
 
 
     public MedicoRecord update(MedicoRecord medicoRecord, Long id){
-        if(!medicoRepository.findById(id).isPresent()){
+        if(!medicoRepository.existsById(id)){
             throw new EntityNotFoundExcepction("Médico não encontrado.");
         }
 
@@ -56,15 +56,16 @@ public class MedicoService {
 
 
     public void delete(Long id){
-        if(!medicoRepository.findById(id).isPresent()){
+        if(!medicoRepository.existsById(id)){
             throw new EntityNotFoundExcepction("Médico não encontrado.");
         }
+
         medicoRepository.deleteById(id);
     }
 
 
     public MedicoRecord findById(Long id){
-        if(!medicoRepository.findById(id).isPresent()){
+        if(!medicoRepository.existsById(id)){
             throw new EntityNotFoundExcepction("Médico não encontrado.");
         }
 
