@@ -9,7 +9,7 @@ public record MedicoRecord(
         Long id,
         String nome_completo,
         String telefone,
-        Endereco endereco,
+        String endereco,
         String CPF,
         Date data_nascimento,
         String email,

@@ -19,6 +19,7 @@ export class CadastrosComponent implements OnInit{
   rota: string = '';
   dataInicial: Date = new Date();
   dataFinal: Date = new Date();
+  tipo: string = '';
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -31,15 +32,19 @@ export class CadastrosComponent implements OnInit{
     this.route.params.subscribe(params => {
       this.nomeEntidade = this.getNome(params['tipo']);
       this.cols = this.getColsByTipoEnt(params['tipo']);
-      this.rota = this.getRota(this.nomeEntidade);
+      this.rota = this.getRota(params['tipo']);
+      this.tipo = params['tipo'];
+      this.getAll(params['tipo'])
     });
 
+  }
 
-    // this.consultasService.getAll(this.rota).subscribe(resp => {
-    //   if(resp){
-    //     this.results = resp;
-    //   }
-    // });
+  getAll(tipo: string){
+    this.consultasService.getAll(this.getRota(tipo) + '/listar').subscribe(resp => {
+      if(resp){
+        this.results = resp;
+      }
+    });
   }
 
   aplicarFiltro(){}
@@ -69,6 +74,7 @@ export class CadastrosComponent implements OnInit{
 
   getRota(tipo: string): string{
     let rota = '';
+    console.log('tipo', tipo)
     switch(tipo){
       case 'Medico':
         rota = '/medicos'
@@ -98,9 +104,9 @@ export class CadastrosComponent implements OnInit{
           { field: 'nome_completo', header: 'Nome', type: 'text' , isShow: true},
           { field: 'telefone', header: 'Telefone', type: 'text' , isShow: true},
           { field: 'endereco', header: 'Endereço', type: 'text' , isShow: true},
-          { field: 'cpf', header: 'CPF', type: 'text' , isShow: true},
+          { field: 'CPF', header: 'CPF', type: 'text' , isShow: true},
           { field: 'data_nascimento', header: 'Data de Nascimento', type: 'date' , isShow: true},
-          { field: 'crm', header: 'CRM', type: 'text' , isShow: true},
+          { field: 'CRM', header: 'CRM', type: 'text' , isShow: true},
         ];
         break;
       case 'Recepcionista':
@@ -131,9 +137,8 @@ export class CadastrosComponent implements OnInit{
           { field: 'nome_completo', header: 'Nome', type: 'text' , isShow: true},
           { field: 'telefone', header: 'Telefone', type: 'text' , isShow: true},
           { field: 'endereco', header: 'Endereço', type: 'text' , isShow: true},
-          { field: 'cpf', header: 'CPF', type: 'text' , isShow: true},
+          { field: 'CPF', header: 'CPF', type: 'text' , isShow: true},
           { field: 'data_nascimento', header: 'Data de Nascimento', type: 'date' , isShow: true},
-          { field: 'plano_saude', header: 'Plano de Saúde', type: 'text' , isShow: true},
         ];
         break;
     }
@@ -186,8 +191,8 @@ export class CadastrosComponent implements OnInit{
 
   deletarEntidade(entity: any){
     var idValue = this.getIdEntidade(entity);
-    this.rota = this.getRota(this.nomeEntidade);
-
+    this.rota = this.getRota(this.tipo);
+    console.log('this.rota', this.rota)
     this.consultasService.delete(idValue, this.rota + '/excluir').subscribe(resp => {
       this.setResults(entity);
     });
@@ -214,12 +219,12 @@ export class CadastrosComponent implements OnInit{
 
   editarEntidade(entity: any){
     this.idEntidade = this.getIdEntidade(entity);
-    this.rota = this.getRota(this.nomeEntidade);
+    this.rota = this.getRota(this.tipo);
     this.openDialog = true;
   }
 
   openModal(){
-    this.rota = this.getRota(this.nomeEntidade) + '/adicionar';
+    //this.rota = this.getRota(this.nomeEntidade) + '/adicionar';
     this.idEntidade = 0;
     this.openDialog = true;
   }

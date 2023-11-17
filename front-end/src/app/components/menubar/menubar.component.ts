@@ -56,6 +56,13 @@ export class MenubarComponent implements OnInit{
               }
           ]
       },
+      {
+        label: 'Gerenciar Consultas',
+        icon: 'pi pi-cog',
+        command: () => {
+          this.router.navigate(['/gerenciarConsultas']);
+        }
+      }
     ];
 
   }

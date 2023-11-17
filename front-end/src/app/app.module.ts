@@ -17,18 +17,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { HttpClientModule } from '@angular/common/http';
 import { ConsultasService } from './services/consultas.service';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
+import { GerenciarConsultasComponent } from './components/gerenciar-consultas/gerenciar-consultas.component';
 @NgModule({
   declarations: [
     AppComponent,
     CadastrosComponent,
     NavBarComponent,
     MenubarComponent,
-    CreateGenericComponent
+    CreateGenericComponent,
+    GerenciarConsultasComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -52,7 +54,8 @@ import { CalendarModule } from 'primeng/calendar';
   ],
   providers: [
     ConsultasService,
-    ConfirmationService],
+    ConfirmationService,
+    MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

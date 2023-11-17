@@ -31,7 +31,6 @@ public class PacienteService {
 
         Paciente pacienteEntity = mapper.toEntity(pacienteRecord);
 
-        enderecoRepository.save(pacienteRecord.endereco());
         pacienteRepository.save(pacienteEntity);
 
         return mapper.toDto(pacienteEntity);
@@ -48,9 +47,7 @@ public class PacienteService {
         Paciente pacienteEntity = mapper.toEntity(pacienteRecord);
 
         pacienteEntity.setId(id);
-        pacienteRecord.endereco().setId(id);
 
-        enderecoRepository.save(pacienteRecord.endereco());
         pacienteRepository.save(pacienteEntity);
 
         return mapper.toDto(pacienteEntity);

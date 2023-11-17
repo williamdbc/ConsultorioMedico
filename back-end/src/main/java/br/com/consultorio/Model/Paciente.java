@@ -14,9 +14,6 @@ public class Paciente extends Pessoa{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private boolean plano_saude;
-    
     @OneToMany(mappedBy = "paciente")
     private List<Agendamento> agendamentos;
 }

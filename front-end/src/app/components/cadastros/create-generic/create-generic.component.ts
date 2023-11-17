@@ -105,17 +105,8 @@ export class CreateGenericComponent implements OnInit{
       this.submitted = false;
       const formData = this.form.value;
 
-      // Verifique se há atores selecionados
-      if (this.selectedAtores && this.selectedAtores.length > 0) {
-        // Extraia os objetos AtorDTO dos atores selecionados
-        formData.listaAtores = this.selectedAtores;
-      } else {
-        // Se nenhum ator foi selecionado, defina listaAtores como uma lista vazia
-        formData.listaAtores = [];
-      }
-
       if (!this.idEntidade || this.idEntidade <= 0) {
-        this.consultasService.create(formData, this.rota).subscribe((resp) => {
+        this.consultasService.create(formData, this.rota + '/adicionar').subscribe((resp) => {
           this.formularioEnviado.emit(resp);
           this.form.reset();
         });

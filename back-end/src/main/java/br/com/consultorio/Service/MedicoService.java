@@ -29,7 +29,6 @@ public class MedicoService {
 
         Medico medicoEntity = mapper.toEntity(medicoRecord);
 
-        enderecoRepository.save(medicoRecord.endereco());
         medicoRepository.save(medicoEntity);
 
         return mapper.toDto(medicoEntity);
@@ -46,9 +45,7 @@ public class MedicoService {
         Medico medicoEntity = mapper.toEntity(medicoRecord);
 
         medicoEntity.setId(id);
-        medicoRecord.endereco().setId(id);
 
-        enderecoRepository.save(medicoRecord.endereco());
         medicoRepository.save(medicoEntity);
 
         return mapper.toDto(medicoEntity);

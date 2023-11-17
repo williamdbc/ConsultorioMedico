@@ -10,11 +10,10 @@ public record PacienteRecord(
         Long id,
         String nome_completo,
         String telefone,
-        Endereco endereco,
+        String endereco,
         String CPF,
         Date data_nascimento,
         String email,
-        boolean plano_saude,
         List<Agendamento> agendamentos
 ) {
 

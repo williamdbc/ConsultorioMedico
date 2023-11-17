@@ -27,9 +27,8 @@ public class Pessoa {
     @Column(length = 11)
     private String telefone;
 
-    @OneToOne
-    @JoinColumn(name = "id_endereco")
-    private Endereco endereco;
+    @Column
+    private String endereco;
 
     @Column
     @CPF(message = "CPF inválido.")
