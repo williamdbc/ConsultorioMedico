@@ -20,7 +20,6 @@ import java.util.Set;
 public class MedicoService {
 
     private final MedicoRepository medicoRepository;
-    private final EnderecoRepository enderecoRepository;
     private final MedicoMapper mapper;
     private final Validator validator;
 

@@ -1,10 +1,10 @@
 package br.com.consultorio.Repository;
 
-import br.com.consultorio.Model.Endereco;
+import br.com.consultorio.Model.Recepcionista;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
+public interface RecepcionistaRepository extends JpaRepository<Recepcionista, Long> {
 
 }
