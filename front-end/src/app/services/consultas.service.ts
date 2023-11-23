@@ -24,7 +24,7 @@ export class ConsultasService {
     return this.http.post(`${this.API}${rota}`, obj)
       .pipe(
         catchError(error => {
-          this.handleCORSError(error);
+          this.handleError(error);
           return throwError(error);
         })
       );
@@ -47,23 +47,17 @@ export class ConsultasService {
     }));
   }
 
+  private handleError(error: any): Observable<never> {
+    let errorMessage = 'Ocorreu um erro no serviço.';
 
-  private handleCORSError(error: any): void {
-    if (error.status === 0) {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'CORS issue: Unable to connect to the server. Please check server configuration.',
-        life: 6000 // Display for 6 seconds
-      });
-    } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: `HTTP error ${error.status}: ${error.message}`,
-        life: 6000 // Display for 6 seconds
-      });
+    if (error.error) {
+      // Erro do lado do cliente
+      errorMessage = `Erro: ${error.error.message}`;
     }
 
+    alert(errorMessage)
+    // Exibir a mensagem de erro usando o MessageService
+
+    return throwError(errorMessage);
   }
 }

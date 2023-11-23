@@ -114,7 +114,7 @@ export class CadastrosComponent implements OnInit{
           { field: 'nome_completo', header: 'Nome', type: 'text' , isShow: true},
           { field: 'telefone', header: 'Telefone', type: 'text' , isShow: true},
           { field: 'endereco', header: 'Endereço', type: 'text' , isShow: true},
-          { field: 'cpf', header: 'CPF', type: 'text' , isShow: true},
+          { field: 'CPF', header: 'CPF', type: 'text' , isShow: true},
           { field: 'data_nascimento', header: 'Data de Nascimento', type: 'date' , isShow: true},
         ];
         break;

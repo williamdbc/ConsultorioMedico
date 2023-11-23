@@ -24,7 +24,7 @@ public class Pessoa {
     @Column(length = 100)
     private String nome_completo;
 
-    @Column(length = 11)
+    @Column(length = 20)
     private String telefone;
 
     @Column
