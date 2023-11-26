@@ -42,6 +42,11 @@ public class RecepcionistaController {
         return new ResponseEntity<>(recepcionistaService.findById(id), HttpStatus.OK);
     }
 
+    @GetMapping("/nome/{nome}")
+    public ResponseEntity<List<RecepcionistaRecord>> findRecepcionistasByNome(@PathVariable String nome){
+        return new ResponseEntity<>(recepcionistaService.findByName(nome), HttpStatus.OK);
+    }
+
 
     @GetMapping("/listar")
     public ResponseEntity<List<RecepcionistaRecord>> findAllRecepcionistas(){

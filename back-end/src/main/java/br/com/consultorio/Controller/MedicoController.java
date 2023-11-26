@@ -41,6 +41,10 @@ public class MedicoController {
         return new ResponseEntity<>(medicoService.findById(id), HttpStatus.OK);
     }
 
+    @GetMapping("/nome/{nome}")
+    public ResponseEntity<List<MedicoRecord>> findMedicosByNome(@PathVariable String nome){
+        return new ResponseEntity<>(medicoService.findByName(nome), HttpStatus.OK);
+    }
 
     @GetMapping("/listar")
     public ResponseEntity<List<MedicoRecord>> findAllMedicos(){

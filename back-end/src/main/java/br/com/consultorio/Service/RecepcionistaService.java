@@ -19,6 +19,7 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class RecepcionistaService {
+
     private final RecepcionistaRepository recepcionistaRepository;
     private final RecepcionistaMapper mapper;
     private final Validator validator;
@@ -33,11 +34,8 @@ public class RecepcionistaService {
         return mapper.toDto(recepcionistaEntity);
     }
 
-
     public RecepcionistaRecord update(RecepcionistaRecord recepcionistaRecord, Long id){
-        if(!recepcionistaRepository.existsById(id)){
-            throw new EntityNotFoundExcepction("Recepcionista não encontrado.");
-        }
+        findById(id);
 
         validateRecepcionista(recepcionistaRecord);
 
@@ -50,32 +48,28 @@ public class RecepcionistaService {
         return mapper.toDto(recepcionistaEntity);
     }
 
-
     public void delete(Long id){
-        if(!recepcionistaRepository.existsById(id)){
-            throw new EntityNotFoundExcepction("Recepcionista não encontrado.");
-        }
-
-        recepcionistaRepository.deleteById(id);
+        recepcionistaRepository.delete(mapper.toEntity(findById(id)));
     }
 
+    //=============================================================================================
 
     public RecepcionistaRecord findById(Long id){
-        if(!recepcionistaRepository.existsById(id)){
-            throw new EntityNotFoundExcepction("Recepcionista não encontrado.");
-        }
+        Recepcionista recepcionistaEntity = recepcionistaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundExcepction("Paciente com o id '" + id + "' não foi encontrado."));
 
-        Recepcionista recepcionistaEntity = recepcionistaRepository.findById(id).get();
         return mapper.toDto(recepcionistaEntity);
-
     }
 
+    public List<RecepcionistaRecord> findByName(String name){
+        return mapper.toDto(recepcionistaRepository.findRecepcionistasByName(name));
+    }
 
     public List<RecepcionistaRecord> findAll(){
         return mapper.toDto(recepcionistaRepository.findAll());
     }
 
-    //=============================================================
+    //=============================================================================================
 
     public void validateRecepcionista(RecepcionistaRecord recepcionistaRecord){
         Recepcionista recepcionistaEntity = mapper.toEntity(recepcionistaRecord);
@@ -85,4 +79,5 @@ public class RecepcionistaService {
             throw new BusinessException(violation.getMessage());
         }
     }
+
 }

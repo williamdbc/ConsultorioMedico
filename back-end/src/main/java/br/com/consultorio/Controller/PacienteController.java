@@ -1,5 +1,6 @@
 package br.com.consultorio.Controller;
 
+import br.com.consultorio.Record.MedicoRecord;
 import br.com.consultorio.Record.PacienteRecord;
 import br.com.consultorio.Service.PacienteService;
 import jakarta.validation.Valid;
@@ -41,6 +42,10 @@ public class PacienteController {
         return new ResponseEntity<>(pacienteService.findById(id), HttpStatus.OK);
     }
 
+    @GetMapping("/nome/{nome}")
+    public ResponseEntity<List<PacienteRecord>> findPacientesByNome(@PathVariable String nome){
+        return new ResponseEntity<>(pacienteService.findByName(nome), HttpStatus.OK);
+    }
 
     @GetMapping("/listar")
     public ResponseEntity<List<PacienteRecord>> findAllPacientes(){
