@@ -1,7 +1,6 @@
 package br.com.consultorio.Controller;
 
-import br.com.consultorio.Record.PacienteRecord;
-import br.com.consultorio.Record.RecepcionistaRecord;
+import br.com.consultorio.DTO.RecepcionistaDTO;
 import br.com.consultorio.Service.RecepcionistaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,37 +18,37 @@ public class RecepcionistaController {
     private final RecepcionistaService recepcionistaService;
 
     @PostMapping("/adicionar")
-    public ResponseEntity<RecepcionistaRecord> createRecepcionista(@RequestBody @Valid RecepcionistaRecord recepcionistaRecord){
-        return new ResponseEntity<>(recepcionistaService.create(recepcionistaRecord), HttpStatus.CREATED);
+    public ResponseEntity<RecepcionistaDTO> createRecepcionista(@RequestBody @Valid RecepcionistaDTO recepcionistaDTO){
+        return new ResponseEntity<>(recepcionistaService.create(recepcionistaDTO), HttpStatus.CREATED);
     }
 
 
     @PutMapping("/editar/{id}")
-    public ResponseEntity<RecepcionistaRecord> updateRecepcionista(@RequestBody @Valid RecepcionistaRecord recepcionistaRecord, @PathVariable Long id){
-        return new ResponseEntity<>(recepcionistaService.update(recepcionistaRecord, id), HttpStatus.OK);
+    public ResponseEntity<RecepcionistaDTO> updateRecepcionista(@RequestBody @Valid RecepcionistaDTO recepcionistaDTO, @PathVariable Long id){
+        return new ResponseEntity<>(recepcionistaService.update(recepcionistaDTO, id), HttpStatus.OK);
     }
 
 
     @DeleteMapping("excluir/{id}")
-    public ResponseEntity<RecepcionistaRecord> deleteRecepcionista(@PathVariable Long id){
+    public ResponseEntity<RecepcionistaDTO> deleteRecepcionista(@PathVariable Long id){
         recepcionistaService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<RecepcionistaRecord> findRecepcionistaById(@PathVariable Long id){
+    public ResponseEntity<RecepcionistaDTO> findRecepcionistaById(@PathVariable Long id){
         return new ResponseEntity<>(recepcionistaService.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/nome/{nome}")
-    public ResponseEntity<List<RecepcionistaRecord>> findRecepcionistasByNome(@PathVariable String nome){
+    @GetMapping("/nome")
+    public ResponseEntity<List<RecepcionistaDTO>> findRecepcionistasByNome(@RequestParam("nome") String nome){
         return new ResponseEntity<>(recepcionistaService.findByName(nome), HttpStatus.OK);
     }
 
 
     @GetMapping("/listar")
-    public ResponseEntity<List<RecepcionistaRecord>> findAllRecepcionistas(){
+    public ResponseEntity<List<RecepcionistaDTO>> findAllRecepcionistas(){
         return new ResponseEntity<>(recepcionistaService.findAll(), recepcionistaService.findAll().isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK);
     }
 

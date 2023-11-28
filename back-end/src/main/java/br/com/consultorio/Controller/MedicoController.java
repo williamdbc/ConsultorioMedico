@@ -1,6 +1,6 @@
 package br.com.consultorio.Controller;
 
-import br.com.consultorio.Record.MedicoRecord;
+import br.com.consultorio.DTO.MedicoDTO;
 import br.com.consultorio.Service.MedicoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,36 +18,36 @@ public class MedicoController {
     private final MedicoService medicoService;
 
     @PostMapping("/adicionar")
-    public ResponseEntity<MedicoRecord> createMedico(@RequestBody @Valid MedicoRecord medicoRecord){
-        return new ResponseEntity<>(medicoService.create(medicoRecord), HttpStatus.CREATED);
+    public ResponseEntity<MedicoDTO> createMedico(@RequestBody @Valid MedicoDTO medicoDTO){
+        return new ResponseEntity<>(medicoService.create(medicoDTO), HttpStatus.CREATED);
     }
 
 
     @PutMapping("/editar/{id}")
-    public ResponseEntity<MedicoRecord> updateMedico(@RequestBody @Valid MedicoRecord medicoRecord, @PathVariable Long id){
-        return new ResponseEntity<>(medicoService.update(medicoRecord, id), HttpStatus.OK);
+    public ResponseEntity<MedicoDTO> updateMedico(@RequestBody @Valid MedicoDTO medicoDTO, @PathVariable Long id){
+        return new ResponseEntity<>(medicoService.update(medicoDTO, id), HttpStatus.OK);
     }
 
 
     @DeleteMapping("excluir/{id}")
-    public ResponseEntity<MedicoRecord> deleteMedico(@PathVariable Long id){
+    public ResponseEntity<MedicoDTO> deleteMedico(@PathVariable Long id){
         medicoService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<MedicoRecord> findMedicoById(@PathVariable Long id){
+    public ResponseEntity<MedicoDTO> findMedicoById(@PathVariable Long id){
         return new ResponseEntity<>(medicoService.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/nome/{nome}")
-    public ResponseEntity<List<MedicoRecord>> findMedicosByNome(@PathVariable String nome){
+    @GetMapping("/nome")
+    public ResponseEntity<List<MedicoDTO>> findMedicosByNome(@RequestParam("nome") String nome){
         return new ResponseEntity<>(medicoService.findByName(nome), HttpStatus.OK);
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<MedicoRecord>> findAllMedicos(){
+    public ResponseEntity<List<MedicoDTO>> findAllMedicos(){
         return new ResponseEntity<>(medicoService.findAll(), medicoService.findAll().isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK);
     }
 

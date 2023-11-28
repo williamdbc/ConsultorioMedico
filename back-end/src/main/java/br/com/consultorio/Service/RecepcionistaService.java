@@ -1,12 +1,10 @@
 package br.com.consultorio.Service;
 
+import br.com.consultorio.DTO.RecepcionistaDTO;
 import br.com.consultorio.Exception.BusinessException;
 import br.com.consultorio.Exception.EntityNotFoundExcepction;
 import br.com.consultorio.Mapper.RecepcionistaMapper;
-import br.com.consultorio.Model.Paciente;
 import br.com.consultorio.Model.Recepcionista;
-import br.com.consultorio.Record.PacienteRecord;
-import br.com.consultorio.Record.RecepcionistaRecord;
 import br.com.consultorio.Repository.RecepcionistaRepository;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
@@ -24,22 +22,22 @@ public class RecepcionistaService {
     private final RecepcionistaMapper mapper;
     private final Validator validator;
 
-    public RecepcionistaRecord create(RecepcionistaRecord recepcionistaRecord){
-        validateRecepcionista(recepcionistaRecord);
+    public RecepcionistaDTO create(RecepcionistaDTO recepcionistaDTO){
+        validateRecepcionista(recepcionistaDTO);
 
-        Recepcionista recepcionistaEntity = mapper.toEntity(recepcionistaRecord);
+        Recepcionista recepcionistaEntity = mapper.toEntity(recepcionistaDTO);
 
         recepcionistaRepository.save(recepcionistaEntity);
 
         return mapper.toDto(recepcionistaEntity);
     }
 
-    public RecepcionistaRecord update(RecepcionistaRecord recepcionistaRecord, Long id){
+    public RecepcionistaDTO update(RecepcionistaDTO recepcionistaDTO, Long id){
         findById(id);
 
-        validateRecepcionista(recepcionistaRecord);
+        validateRecepcionista(recepcionistaDTO);
 
-        Recepcionista recepcionistaEntity = mapper.toEntity(recepcionistaRecord);
+        Recepcionista recepcionistaEntity = mapper.toEntity(recepcionistaDTO);
 
         recepcionistaEntity.setId(id);
 
@@ -54,25 +52,25 @@ public class RecepcionistaService {
 
     //=============================================================================================
 
-    public RecepcionistaRecord findById(Long id){
+    public RecepcionistaDTO findById(Long id){
         Recepcionista recepcionistaEntity = recepcionistaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundExcepction("Paciente com o id '" + id + "' não foi encontrado."));
 
         return mapper.toDto(recepcionistaEntity);
     }
 
-    public List<RecepcionistaRecord> findByName(String name){
+    public List<RecepcionistaDTO> findByName(String name){
         return mapper.toDto(recepcionistaRepository.findRecepcionistasByName(name));
     }
 
-    public List<RecepcionistaRecord> findAll(){
+    public List<RecepcionistaDTO> findAll(){
         return mapper.toDto(recepcionistaRepository.findAll());
     }
 
     //=============================================================================================
 
-    public void validateRecepcionista(RecepcionistaRecord recepcionistaRecord){
-        Recepcionista recepcionistaEntity = mapper.toEntity(recepcionistaRecord);
+    public void validateRecepcionista(RecepcionistaDTO recepcionistaDTO){
+        Recepcionista recepcionistaEntity = mapper.toEntity(recepcionistaDTO);
         Set<ConstraintViolation<Recepcionista>> violations = validator.validate(recepcionistaEntity);
 
         for (ConstraintViolation<Recepcionista> violation : violations) {

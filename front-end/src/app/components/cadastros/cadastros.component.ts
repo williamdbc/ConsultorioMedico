@@ -48,10 +48,10 @@ export class CadastrosComponent implements OnInit{
     });
   }
 
-  aplicarFiltro(){
+  aplicarFiltro() {
     this.consultasService.findByNome(this.nomeFiltro, this.rota + '/nome').subscribe(resp => {
       this.results = resp;
-    })
+    });
   }
 
   getNome(tipo: string): string{
@@ -109,9 +109,9 @@ export class CadastrosComponent implements OnInit{
           { field: 'nome_completo', header: 'Nome', type: 'text' , isShow: true},
           { field: 'telefone', header: 'Telefone', type: 'text' , isShow: true},
           { field: 'endereco', header: 'Endereço', type: 'text' , isShow: true},
-          { field: 'CPF', header: 'CPF', type: 'text' , isShow: true},
+          { field: 'cpf', header: 'CPF', type: 'text' , isShow: true},
           { field: 'data_nascimento', header: 'Data de Nascimento', type: 'date' , isShow: true},
-          { field: 'CRM', header: 'CRM', type: 'text' , isShow: true},
+          { field: 'crm', header: 'CRM', type: 'text' , isShow: true},
         ];
         break;
       case 'Recepcionista':
@@ -119,7 +119,7 @@ export class CadastrosComponent implements OnInit{
           { field: 'nome_completo', header: 'Nome', type: 'text' , isShow: true},
           { field: 'telefone', header: 'Telefone', type: 'text' , isShow: true},
           { field: 'endereco', header: 'Endereço', type: 'text' , isShow: true},
-          { field: 'CPF', header: 'CPF', type: 'text' , isShow: true},
+          { field: 'cpf', header: 'CPF', type: 'text' , isShow: true},
           { field: 'data_nascimento', header: 'Data de Nascimento', type: 'date' , isShow: true},
         ];
         break;
@@ -142,7 +142,7 @@ export class CadastrosComponent implements OnInit{
           { field: 'nome_completo', header: 'Nome', type: 'text' , isShow: true},
           { field: 'telefone', header: 'Telefone', type: 'text' , isShow: true},
           { field: 'endereco', header: 'Endereço', type: 'text' , isShow: true},
-          { field: 'CPF', header: 'CPF', type: 'text' , isShow: true},
+          { field: 'cpf', header: 'CPF', type: 'text' , isShow: true},
           { field: 'data_nascimento', header: 'Data de Nascimento', type: 'date' , isShow: true},
         ];
         break;
