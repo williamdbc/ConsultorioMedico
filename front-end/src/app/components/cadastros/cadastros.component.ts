@@ -20,6 +20,7 @@ export class CadastrosComponent implements OnInit{
   dataInicial: Date = new Date();
   dataFinal: Date = new Date();
   tipo: string = '';
+  nomeFiltro: string = '';
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -47,7 +48,11 @@ export class CadastrosComponent implements OnInit{
     });
   }
 
-  aplicarFiltro(){}
+  aplicarFiltro(){
+    this.consultasService.findByNome(this.nomeFiltro, this.rota + '/nome').subscribe(resp => {
+      this.results = resp;
+    })
+  }
 
   getNome(tipo: string): string{
     let nome = '';

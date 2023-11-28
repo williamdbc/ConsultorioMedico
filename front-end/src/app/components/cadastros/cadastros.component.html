@@ -12,6 +12,18 @@
   </div>
 </ng-container>
 
+
+<ng-container *ngIf="nomeEntidade == 'Médicos' || nomeEntidade == 'Recepcionistas' || nomeEntidade == 'Pacientes'">
+  <div class="card mt-2">
+    <div style="display: flex; gap: 1rem;">
+      <h3 style="position: relative; bottom: 7px;">Nome:</h3>
+      <input pInputText type="text" [(ngModel)]="nomeFiltro" >
+
+      <p-button (click)="aplicarFiltro()">Filtrar</p-button>
+    </div>
+  </div>
+</ng-container>
+
 <div class="flex flex-row justify-between align-center">
   <h1>{{nomeEntidade}}</h1>
   <p-button label="Cadastrar" styleClass="p-button-success" (onClick)="openModal()"></p-button>

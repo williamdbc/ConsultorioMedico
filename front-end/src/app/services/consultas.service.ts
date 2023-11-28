@@ -7,7 +7,7 @@ import { Observable, catchError, map, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class ConsultasService {
-  private readonly API = 'http://localhost:8080/api';
+  private readonly API = '/api';
   constructor(private http: HttpClient, private messageService: MessageService) {
   }
 
@@ -59,5 +59,12 @@ export class ConsultasService {
     // Exibir a mensagem de erro usando o MessageService
 
     return throwError(errorMessage);
+  }
+
+  findByNome(nome: string, rota: string): Observable<any> {
+    return this.http.get(`${this.API}${rota}/${nome}`).pipe(map((res: any) => {
+      return res;
+    }));
+
   }
 }
