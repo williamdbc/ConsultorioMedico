@@ -1,5 +1,6 @@
 package br.com.consultorio.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +26,7 @@ public class Medico extends Pessoa{
     private Especializacao especializacao;
 
     @OneToMany(mappedBy = "medico")
+    @JsonIgnore
     private List<Agendamento> agendamentos;
 
 
