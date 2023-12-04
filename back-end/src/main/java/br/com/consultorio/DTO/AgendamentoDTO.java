@@ -11,23 +11,15 @@ public class AgendamentoDTO {
     private Long id;
     private Timestamp data_hora_inicio;
     private Timestamp data_hora_fim;
-    private MedicoDTO medicoDTO;
-    private PacienteDTO pacienteDTO;
-    private RecepcionistaDTO recepcionistaDTO;
+    private MedicoDTO medico;
+    private PacienteDTO paciente;
+    private RecepcionistaDTO recepcionista;
     private double valor_consulta;
 
-    public Timestamp getEndTime(Timestamp hora_inicial) {
-        return Timestamp.from(hora_inicial.toInstant().plus(29, ChronoUnit.MINUTES).plus(59, ChronoUnit.SECONDS));
+    public Timestamp getEndTime(int intervalMinutes, int intervalSeconds) {
+            return Timestamp.from(data_hora_inicio.toInstant()
+                    .plus(intervalMinutes, ChronoUnit.MINUTES)
+                    .plus(intervalSeconds, ChronoUnit.SECONDS));
     }
-
-    public boolean startDateGreatherThenEndDate(){
-        return data_hora_inicio.after(data_hora_fim);
-    }
-
-    public boolean differeceInDaysGreatherThan(){
-        Long differenceBetweenDays = 60L;
-        return ChronoUnit.DAYS.between(data_hora_fim.toInstant(), data_hora_inicio.toInstant()) > differenceBetweenDays;
-    }
-
-
+    
 }

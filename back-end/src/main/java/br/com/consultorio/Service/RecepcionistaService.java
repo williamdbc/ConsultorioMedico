@@ -2,7 +2,7 @@ package br.com.consultorio.Service;
 
 import br.com.consultorio.DTO.RecepcionistaDTO;
 import br.com.consultorio.Exception.BusinessException;
-import br.com.consultorio.Exception.EntityNotFoundExcepction;
+import br.com.consultorio.Exception.EntityNotFoundException;
 import br.com.consultorio.Mapper.RecepcionistaMapper;
 import br.com.consultorio.Model.Recepcionista;
 import br.com.consultorio.Repository.RecepcionistaRepository;
@@ -54,7 +54,7 @@ public class RecepcionistaService {
 
     public RecepcionistaDTO findById(Long id){
         Recepcionista recepcionistaEntity = recepcionistaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundExcepction("Paciente com o id '" + id + "' não foi encontrado."));
+                .orElseThrow(() -> new EntityNotFoundException("Paciente com o id '" + id + "' não foi encontrado."));
 
         return mapper.toDto(recepcionistaEntity);
     }

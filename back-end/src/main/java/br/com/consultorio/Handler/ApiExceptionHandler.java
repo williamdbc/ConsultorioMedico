@@ -1,9 +1,8 @@
 package br.com.consultorio.Handler;
 
 import br.com.consultorio.Exception.BusinessException;
-import br.com.consultorio.Exception.EntityNotFoundExcepction;
+import br.com.consultorio.Exception.EntityNotFoundException;
 import br.com.consultorio.Exception.StandardError;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +31,8 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(error, BAD_REQUEST);
     }
 
-    @ExceptionHandler(EntityNotFoundExcepction.class)
-    protected ResponseEntity<StandardError> entityNotFoundException(final EntityNotFoundExcepction ex, final HttpServletRequest req) {
+    @ExceptionHandler(EntityNotFoundException.class)
+    protected ResponseEntity<StandardError> entityNotFoundException(final EntityNotFoundException ex, final HttpServletRequest req) {
 
         StandardError error = new StandardError();
 

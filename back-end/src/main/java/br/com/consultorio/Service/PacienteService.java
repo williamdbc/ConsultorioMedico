@@ -2,7 +2,7 @@ package br.com.consultorio.Service;
 
 import br.com.consultorio.DTO.PacienteDTO;
 import br.com.consultorio.Exception.BusinessException;
-import br.com.consultorio.Exception.EntityNotFoundExcepction;
+import br.com.consultorio.Exception.EntityNotFoundException;
 import br.com.consultorio.Mapper.PacienteMapper;
 import br.com.consultorio.Model.Paciente;
 import br.com.consultorio.Repository.PacienteRepository;
@@ -54,7 +54,7 @@ public class PacienteService {
 
     public PacienteDTO findById(Long id){
         Paciente pacienteEntity = pacienteRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundExcepction("Paciente com o id '" + id + "' não foi encontrado."));
+                .orElseThrow(() -> new EntityNotFoundException("Paciente com o id '" + id + "' não foi encontrado."));
 
         return mapper.toDto(pacienteEntity);
     }

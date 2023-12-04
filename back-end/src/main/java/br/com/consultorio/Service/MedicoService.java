@@ -2,7 +2,7 @@ package br.com.consultorio.Service;
 
 import br.com.consultorio.DTO.MedicoDTO;
 import br.com.consultorio.Exception.BusinessException;
-import br.com.consultorio.Exception.EntityNotFoundExcepction;
+import br.com.consultorio.Exception.EntityNotFoundException;
 import br.com.consultorio.Mapper.MedicoMapper;
 import br.com.consultorio.Model.Medico;
 import br.com.consultorio.Repository.MedicoRepository;
@@ -54,13 +54,12 @@ public class MedicoService {
 
     public MedicoDTO findById(Long id){
         Medico medicoEntity = medicoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundExcepction("Médico com o id '" + id + "' não foi encontrado."));
+                .orElseThrow(() -> new EntityNotFoundException("Médico com o id '" + id + "' não foi encontrado."));
 
         return mapper.toDto(medicoEntity);
     }
 
     public List<MedicoDTO> findByName(String name){
-        System.out.println(name);
         return mapper.toDto(medicoRepository.findMedicosByName(name));
     }
 

@@ -8,6 +8,6 @@ import java.util.List;
 public class PacienteDTO extends PessoaDTO{
 
     private Long id;
-    private List<AgendamentoDTO> agendamentoDTO;
+    private List<AgendamentoDTO> agendamentos;
 
 }
