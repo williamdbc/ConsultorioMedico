@@ -43,7 +43,9 @@
       <tr>
         <ng-container *ngFor="let col of columns">
           <td *ngIf="col.type === 'date'"> {{ rowData[col.field] | date:'dd/MM/yyyy' }}</td>
-          <td *ngIf="col.isShow && col.type !== 'date'"> {{ rowData[col.field] }}</td>
+          <td *ngIf="col.isShow && col.type !== 'date' && col.type !== 'medico'
+          && col.type !== 'recepcionista' && col.type !== 'paciente'"> {{ rowData[col.field] }}</td>
+          <td *ngIf="col.isShow && col.type "></td>
         </ng-container>
 
         <td>

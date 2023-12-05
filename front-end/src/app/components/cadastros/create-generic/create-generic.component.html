@@ -39,6 +39,24 @@
           ></p-dropdown>
         </ng-container>
 
+        <ng-container *ngSwitchCase="'paciente'">
+          <p-dropdown [options]="pacientes" [(ngModel)]="selectedPaciente" [placeholder]="idEntidade <= 0 ? 'Selecione um Paciente' : ''"  optionLabel="nome_completo"
+          formControlName="{{ atributo.field }}" id="{{ atributo.field }}" name="{{ atributo.field }}"
+          ></p-dropdown>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'medico'">
+          <p-dropdown [options]="medicos" [(ngModel)]="selectedMedico" [placeholder]="idEntidade <= 0 ? 'Selecione um Médico' : ''"  optionLabel="nome_completo"
+          formControlName="{{ atributo.field }}" id="{{ atributo.field }}" name="{{ atributo.field }}"
+          ></p-dropdown>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'recepcionista'">
+          <p-dropdown [options]="recepcionistas" [(ngModel)]="selectedRecepcionista" [placeholder]="idEntidade <= 0 ? 'Selecione um Recepcionista': ''"  optionLabel="nome_completo"
+          formControlName="{{ atributo.field }}" id="{{ atributo.field }}" name="{{ atributo.field }}"
+          ></p-dropdown>
+        </ng-container>
+
       </ng-container>
 
       <!-- Exibir mensagem de erro apenas após o envio do formulário -->

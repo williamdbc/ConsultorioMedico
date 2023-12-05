@@ -13,6 +13,7 @@ export class CreateGenericComponent implements OnInit{
   @Output() formularioEnviado = new EventEmitter<any>();
   @Input() rota: string = '';
   @Input() nomeEntidade: string = '';
+  @Input() disabled: boolean = false;
 
   public form:FormGroup;
   submitted: boolean = false;
@@ -21,12 +22,18 @@ export class CreateGenericComponent implements OnInit{
   diretores: any[] = [];
   classes: any[] = [];
   titulos: any[] = [];
+  pacientes: any[] = [];
+  medicos: any[] = [];
+  recepcionistas: any[] = [];
 
   selectedAtores: any[] = [];
   selectedItens: any[] = [];
   selectedDiretor: any;
   selectedClasse: any;
   selectedTitulo: any;
+  selectedMedico: any;
+  selectedPaciente: any;
+  selectedRecepcionista: any;
 
   entidade: any;
 
@@ -45,7 +52,6 @@ export class CreateGenericComponent implements OnInit{
 
     if(this.idEntidade > 0){
       this.getById();
-
     }else{
       this.getAllEntidades();
     }
@@ -62,6 +68,11 @@ export class CreateGenericComponent implements OnInit{
         break;
       case 'Item':
         this.getAllTitulos();
+        break;
+      case 'Agendamentos':
+        this.getAllPacientes();
+        this.getAllMedicos();
+        this.getAllRecepcionistas();
         break;
     }
   }
@@ -225,4 +236,77 @@ export class CreateGenericComponent implements OnInit{
       }
     });
   }
+
+  getAllPacientes(){
+    this.consultasService.getAll('/pacientes/listar').subscribe(resp => {
+      if(resp){
+        this.pacientes = resp;
+
+        if (this.idEntidade > 0) {
+          this.selectedPaciente = this.pacientes.filter(x => x.id_diretor == this.entidade.diretor.id_diretor)[0];
+
+          this.pacientes.sort((d1, d2) => {
+            if (d1.nome === this.selectedPaciente.nome) {
+                return -1; // selectedDiretor vem antes
+            } else if (d2.nome === this.selectedPaciente.nome) {
+                return 1; // selectedDiretor vem depois
+            } else {
+                return d1.nome.localeCompare(d2.nome); // ordenar pelo nome
+            }
+          });
+
+          console.log('this.pacientes', this.pacientes)
+
+        }
+      }
+    });
+  }
+
+
+  getAllMedicos(){
+    this.consultasService.getAll('/medicos/listar').subscribe(resp => {
+      if(resp){
+        this.medicos = resp;
+
+        if (this.idEntidade > 0) {
+          console.log('medicos', this.medicos, this.idEntidade)
+          this.selectedDiretor = this.medicos.filter(x => x.id_diretor == this.entidade.diretor.id_diretor)[0];
+
+          this.medicos.sort((d1, d2) => {
+            if (d1.nome === this.selectedMedico.nome) {
+                return -1; // selectedMedico vem antes
+            } else if (d2.nome === this.selectedMedico.nome) {
+                return 1; // selectedDiretor vem depois
+            } else {
+                return d1.nome.localeCompare(d2.nome); // ordenar pelo nome
+            }
+          });
+        }
+      }
+    });
+  }
+
+  getAllRecepcionistas(){
+    this.consultasService.getAll('/recepcionistas/listar').subscribe(resp => {
+      if(resp){
+        this.recepcionistas = resp;
+
+        if (this.idEntidade > 0) {
+          console.log('recepcionistas', this.recepcionistas, this.idEntidade)
+          this.selectedDiretor = this.recepcionistas.filter(x => x.id_diretor == this.entidade.diretor.id_diretor)[0];
+
+          this.recepcionistas.sort((d1, d2) => {
+            if (d1.nome === this.selectedRecepcionista.nome) {
+                return -1; // selectedRecepcionista vem antes
+            } else if (d2.nome === this.selectedRecepcionista.nome) {
+                return 1; // selectedDiretor vem depois
+            } else {
+                return d1.nome.localeCompare(d2.nome); // ordenar pelo nome
+            }
+          });
+        }
+      }
+    });
+  }
+
 }

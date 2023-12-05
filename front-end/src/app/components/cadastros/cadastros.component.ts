@@ -125,8 +125,11 @@ export class CadastrosComponent implements OnInit{
         break;
       case 'Agendamento':
         cols = [
-          { field: 'data_hora_inicial', header: 'Hora Inicial', type: 'date' , isShow: true},
-          { field: 'data_hora_fim', header: 'Data Final', type: 'date'  , isShow: true},
+          { field: 'data_hora_inicio', header: 'Inicio', type: 'date' , isShow: true},
+          { field: 'data_hora_fim', header: 'Fim', type: 'date'  , isShow: true},
+          { field: 'medico', header: 'Médico', type: 'medico'  , isShow: true},
+          { field: 'paciente', header: 'Paciente', type: 'paciente'  , isShow: true},
+          { field: 'recepcionista', header: 'Recepcionista', type: 'recepcionista'  , isShow: true},
           { field: 'valor_consulta', header: 'Valor da Consulta', type: 'number'  , isShow: true},
         ];
         break;

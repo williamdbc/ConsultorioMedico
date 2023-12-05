@@ -23,6 +23,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { GerenciarConsultasComponent } from './components/gerenciar-consultas/gerenciar-consultas.component';
+import { ShowGenericComponent } from './components/cadastros/show-generic/show-generic.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +31,8 @@ import { GerenciarConsultasComponent } from './components/gerenciar-consultas/ge
     NavBarComponent,
     MenubarComponent,
     CreateGenericComponent,
-    GerenciarConsultasComponent
+    GerenciarConsultasComponent,
+    ShowGenericComponent,
   ],
   imports: [
     BrowserAnimationsModule,
