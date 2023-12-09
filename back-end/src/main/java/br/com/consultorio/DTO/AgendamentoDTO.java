@@ -1,7 +1,9 @@
 package br.com.consultorio.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
+import javax.swing.text.html.parser.Entity;
 import java.sql.Timestamp;
 import java.time.temporal.ChronoUnit;
 
@@ -16,10 +18,23 @@ public class AgendamentoDTO {
     private RecepcionistaDTO recepcionista;
     private double valor_consulta;
 
-    public Timestamp getEndTime(int intervalMinutes, int intervalSeconds) {
-            return Timestamp.from(data_hora_inicio.toInstant()
-                    .plus(intervalMinutes, ChronoUnit.MINUTES)
-                    .plus(intervalSeconds, ChronoUnit.SECONDS));
+    @JsonIgnore
+    public boolean isPacienteNull(){
+       return isEntityNull(paciente);
+   }
+
+    @JsonIgnore
+    public boolean isMedicoNull(){
+        return isEntityNull(medico);
     }
     
+    @JsonIgnore
+    public boolean isRecepcionistaNull(){
+        return isEntityNull(recepcionista);
+    }
+
+   private boolean isEntityNull(Object entity){
+       return entity == null;
+   }
+
 }

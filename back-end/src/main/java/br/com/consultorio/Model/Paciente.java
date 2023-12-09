@@ -1,5 +1,6 @@
 package br.com.consultorio.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
@@ -16,10 +17,12 @@ public class Paciente extends Pessoa{
     private Long id;
 
     @OneToMany(mappedBy = "paciente")
+    @JsonIgnore
     private List<Agendamento> agendamentos;
-    
+
     public boolean isAvailable(Timestamp startDateTimeSchedule, Timestamp endDateTimeSchedule) {
-        return this.agendamentos.stream()
+        return (this.agendamentos == null) ? true :
+                this.agendamentos.stream()
                 .noneMatch(agendamento ->
                 agendamento.getData_hora_inicio().before(endDateTimeSchedule) &&
                 agendamento.getData_hora_fim().after(startDateTimeSchedule));

@@ -31,7 +31,8 @@ public class Medico extends Pessoa{
     private List<Agendamento> agendamentos;
 
     public boolean isAvailable(Timestamp startDateTimeSchedule, Timestamp endDateTimeSchedule) {
-        return this.agendamentos.stream()
+        return (this.agendamentos == null) ? true :
+                this.agendamentos.stream()
                 .noneMatch(agendamento ->
                 agendamento.getData_hora_inicio().before(endDateTimeSchedule) &&
                 agendamento.getData_hora_fim().after(startDateTimeSchedule));

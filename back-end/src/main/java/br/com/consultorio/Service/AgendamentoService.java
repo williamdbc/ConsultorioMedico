@@ -35,30 +35,27 @@ public class AgendamentoService {
     private final AgendamentoRepository agendamentoRepository;
     private final AgendamentoMapper agendamentoMapper;
 
-    private static final int INTERVAL_MINUTES = 29;
-    private static final int INTERVAL_SECONDS = 59;
-
     public AgendamentoDTO create(AgendamentoDTO agendamentoDTO){
-        agendamentoDTO.getEndTime(INTERVAL_MINUTES, INTERVAL_SECONDS);
-        
+        validate(agendamentoDTO);
+
         Agendamento agendamento = agendamentoMapper.toEntity(agendamentoDTO);
-        
-        validate(agendamentoDTO, agendamento);
-        
+
+        isScheduleAvailable(agendamento);
+
         agendamentoRepository.save(agendamento);
         
         return agendamentoMapper.toDto(agendamento);
     }
-    
+
     public AgendamentoDTO update(AgendamentoDTO agendamentoDTO, Long id){
         findById(id);
-        
-        agendamentoDTO.getEndTime(INTERVAL_MINUTES, INTERVAL_SECONDS);
-        
+
+        validate(agendamentoDTO);
+
         Agendamento agendamento = agendamentoMapper.toEntity(agendamentoDTO);
-        
-        validate(agendamentoDTO, agendamento);
-        
+
+        isScheduleAvailable(agendamento);
+
         agendamento.setId(id);
         
         agendamentoRepository.save(agendamento);
@@ -78,14 +75,21 @@ public class AgendamentoService {
         
         return agendamentoMapper.toDto(agendamentoEntity);
     }
-    
-    public List<AgendamentoDTO> findSchedulesBetweenDates(Timestamp startDateTime, Timestamp endDateTime){
-        if (endDateTime.before(startDateTime)) {
+
+    public List<AgendamentoDTO> findSchedulesBetweenDates(String startDateTime, String endDateTime){
+        Timestamp startTimestamp = Timestamp.valueOf(startDateTime.replace("T", " "));
+        Timestamp endTimestamp = Timestamp.valueOf(endDateTime.replace("T", " "));
+
+        startTimestamp.setHours(startTimestamp.getHours() - 3);
+        endTimestamp.setHours(endTimestamp.getHours() - 3);
+
+        if (endTimestamp.before(startTimestamp)) {
             throw new BusinessException("A data de fim não pode ser anterior à data de início.");
         }
-        
-        return agendamentoMapper.toDto(agendamentoRepository.findBetweenDates(startDateTime, endDateTime));
+
+        return agendamentoMapper.toDto(agendamentoRepository.findBetweenDates(startTimestamp, endTimestamp));
     }
+
     
     public List<AgendamentoDTO> findAll(){
         return agendamentoMapper.toDto(agendamentoRepository.findAll());
@@ -93,36 +97,34 @@ public class AgendamentoService {
 
     //=============================================================================================
     
-    private void validate(AgendamentoDTO agendamentoDTO, Agendamento agendamento){
-        Medico medico = validateMedico(agendamentoDTO);
-        Paciente paciente = validatePaciente(agendamentoDTO);
-        Recepcionista recepcionista = validateRecepcionista(agendamentoDTO);
-        
-        isScheduleAvailable(agendamentoDTO, medico, paciente);
-        
-        agendamento.setMedico(medico);
-        agendamento.setPaciente(paciente);
-        agendamento.setRecepcionista(recepcionista);
+    private void validate(AgendamentoDTO agendamentoDTO){
+        if (agendamentoDTO.getData_hora_fim().before(agendamentoDTO.getData_hora_inicio())) {
+            throw new BusinessException("A data de fim não pode ser anterior à data de início.");
+        }
+
+        if(agendamentoDTO.isMedicoNull()){
+            throw new BusinessException("Medico não pode ser nulo.");
+        }
+
+        if(agendamentoDTO.isPacienteNull()){
+            throw new BusinessException("Paciente não pode ser nulo.");
+        }
+
+        if(agendamentoDTO.isRecepcionistaNull()){
+            throw new BusinessException("Recepcionista não pode ser nulo.");
+        }
+
     }
-    
-    private Medico validateMedico(AgendamentoDTO agendamentoDTO){
-        MedicoDTO medicoDTO = medicoService.findById(agendamentoDTO.getMedico().getId());
-        return medicoMapper.toEntity(medicoDTO);
-    }
-    
-    private Paciente validatePaciente(AgendamentoDTO agendamentoDTO){
-        PacienteDTO pacienteDTO = pacienteService.findById(agendamentoDTO.getPaciente().getId());
-        return pacienteMapper.toEntity(pacienteDTO);
-    }
-    
-    private Recepcionista validateRecepcionista(AgendamentoDTO agendamentoDTO){
-        RecepcionistaDTO recepcionistaDTO = recepcionistaService.findById(agendamentoDTO.getRecepcionista().getId());
-        return recepcionistaMapper.toEntity(recepcionistaDTO);
-    }
-    
-    private void isScheduleAvailable(AgendamentoDTO agendamentoDTO, Medico medico, Paciente paciente){
-        Timestamp scheduleStartDateTime = agendamentoDTO.getData_hora_inicio();
-        Timestamp scheduleEndDateTime = agendamentoDTO.getData_hora_fim();
+
+    private void isScheduleAvailable(Agendamento agendamento){
+        Timestamp scheduleStartDateTime = agendamento.getData_hora_inicio();
+        Timestamp scheduleEndDateTime = agendamento.getData_hora_fim();
+
+        MedicoDTO medicoDTO = medicoService.findById(agendamento.getMedico().getId());
+        Medico medico = medicoMapper.toEntity(medicoDTO);
+
+        PacienteDTO pacienteDTO = pacienteService.findById(agendamento.getPaciente().getId());
+        Paciente paciente = pacienteMapper.toEntity(pacienteDTO);
         
         if(!medico.isAvailable(scheduleStartDateTime, scheduleEndDateTime)){
             throw new BusinessException("Médico já tem um agendamento nesse hórario.");
@@ -131,6 +133,13 @@ public class AgendamentoService {
         if(!paciente.isAvailable(scheduleStartDateTime, scheduleEndDateTime)){
             throw new BusinessException("Paciente já tem um agendamento nesse hórario.");
         }
+
+        RecepcionistaDTO recepcionistaDTO = recepcionistaService.findById(agendamento.getRecepcionista().getId());
+        Recepcionista recepcionista = recepcionistaMapper.toEntity(recepcionistaDTO);
+
+        agendamento.setMedico(medico);
+        agendamento.setPaciente(paciente);
+        agendamento.setRecepcionista(recepcionista);
     }
     
 }

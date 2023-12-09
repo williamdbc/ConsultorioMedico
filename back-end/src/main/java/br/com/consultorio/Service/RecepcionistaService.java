@@ -54,7 +54,7 @@ public class RecepcionistaService {
 
     public RecepcionistaDTO findById(Long id){
         Recepcionista recepcionistaEntity = recepcionistaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Paciente com o id '" + id + "' não foi encontrado."));
+                .orElseThrow(() -> new EntityNotFoundException("Recepcionista com o id '" + id + "' não foi encontrado."));
 
         return mapper.toDto(recepcionistaEntity);
     }

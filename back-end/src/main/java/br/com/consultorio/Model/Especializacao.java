@@ -3,6 +3,7 @@ package br.com.consultorio.Model;
 import br.com.consultorio.Enumeration.EspecializacaoEnum;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.Immutable;
 
 @Data
 @Entity

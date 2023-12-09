@@ -1,5 +1,6 @@
 package br.com.consultorio.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.List;
 public class PacienteDTO extends PessoaDTO{
 
     private Long id;
+
+    @JsonIgnore
     private List<AgendamentoDTO> agendamentos;
 
 }
