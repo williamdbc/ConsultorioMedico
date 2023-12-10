@@ -1,22 +1,22 @@
 package br.com.consultorio.Service;
 
 import br.com.consultorio.DTO.*;
+import br.com.consultorio.Enumeration.ConsultaEnum;
 import br.com.consultorio.Exception.BusinessException;
 import br.com.consultorio.Exception.EntityNotFoundException;
 import br.com.consultorio.Mapper.AgendamentoMapper;
 import br.com.consultorio.Mapper.MedicoMapper;
 import br.com.consultorio.Mapper.PacienteMapper;
 import br.com.consultorio.Mapper.RecepcionistaMapper;
-import br.com.consultorio.Model.Agendamento;
-import br.com.consultorio.Model.Medico;
-import br.com.consultorio.Model.Paciente;
-import br.com.consultorio.Model.Recepcionista;
+import br.com.consultorio.Model.*;
 
 import br.com.consultorio.Repository.AgendamentoRepository;
+import br.com.consultorio.Repository.ConsultaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -32,18 +32,23 @@ public class AgendamentoService {
     private final RecepcionistaMapper recepcionistaMapper;
     private final RecepcionistaService recepcionistaService;
 
+    private final ConsultaRepository consultaRepository;
+
     private final AgendamentoRepository agendamentoRepository;
     private final AgendamentoMapper agendamentoMapper;
 
-    public AgendamentoDTO create(AgendamentoDTO agendamentoDTO){
+    public AgendamentoDTO create(AgendamentoDTO agendamentoDTO) {
         validate(agendamentoDTO);
 
         Agendamento agendamento = agendamentoMapper.toEntity(agendamentoDTO);
 
         isScheduleAvailable(agendamento);
 
+        Consulta consulta = new Consulta(agendamento);
+
+        agendamento.setConsulta(consulta);
         agendamentoRepository.save(agendamento);
-        
+
         return agendamentoMapper.toDto(agendamento);
     }
 
@@ -64,7 +69,13 @@ public class AgendamentoService {
     }
     
     public void delete(Long id){
-        agendamentoRepository.delete(agendamentoMapper.toEntity(findById(id)));
+        AgendamentoDTO agendamentoDTO = findById(id);
+
+        if(consultaRepository.findStatusConsultaByAgendamento(id).equals(ConsultaEnum.REALIZADA)){
+            throw new BusinessException("Não é possivel excluir um agendamento que tem uma consulta que foi realizada.");
+        }
+
+        agendamentoRepository.deleteById(id);
     }
     
     //=============================================================================================

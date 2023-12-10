@@ -30,6 +30,9 @@ public class Agendamento {
     @JoinColumn(name = "id_recepcionista")
     private Recepcionista recepcionista;
 
+    @OneToOne(mappedBy = "agendamento", cascade = CascadeType.ALL)
+    private Consulta consulta;
+
     @Column
     private double valor_consulta;
 

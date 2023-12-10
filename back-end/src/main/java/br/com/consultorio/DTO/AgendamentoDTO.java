@@ -19,6 +19,9 @@ public class AgendamentoDTO {
     private double valor_consulta;
 
     @JsonIgnore
+    private ConsultaDTO consulta;
+
+    @JsonIgnore
     public boolean isPacienteNull(){
        return isEntityNull(paciente);
    }
@@ -27,7 +30,7 @@ public class AgendamentoDTO {
     public boolean isMedicoNull(){
         return isEntityNull(medico);
     }
-    
+
     @JsonIgnore
     public boolean isRecepcionistaNull(){
         return isEntityNull(recepcionista);
