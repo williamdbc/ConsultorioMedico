@@ -1,6 +1,5 @@
 package br.com.consultorio.Controller;
 
-import br.com.consultorio.DTO.AgendamentoDTO;
 import br.com.consultorio.DTO.ConsultaDTO;
 import br.com.consultorio.Service.ConsultaService;
 import jakarta.validation.Valid;
@@ -33,7 +32,7 @@ public class ConsultaController {
     public ResponseEntity<List<ConsultaDTO>> acessarConsultas(@RequestParam String cpf,
                                                               @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") String birthDate){
 
-        List<ConsultaDTO> consultas = consultaService.findConsultasByCPF(cpf, birthDate);
+        List<ConsultaDTO> consultas = consultaService.findConsultaByPaciente(cpf, birthDate);
         return new ResponseEntity<>(consultas, consultas.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK);
     }
 

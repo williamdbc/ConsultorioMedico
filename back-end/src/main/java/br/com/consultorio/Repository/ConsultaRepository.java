@@ -2,13 +2,11 @@ package br.com.consultorio.Repository;
 
 import br.com.consultorio.Enumeration.ConsultaEnum;
 import br.com.consultorio.Model.Consulta;
-import lombok.Data;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +22,7 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Long> {
             "JOIN a.paciente pa " +
             "WHERE pa.CPF = :cpf " +
             "AND pa.data_nascimento = :dataNascimento")
-    List<Consulta> findConsultasByPacienteCpfAndDataNascimento(
+    List<Consulta> findConsultaByPaciente(
             @Param("cpf") String cpf,
             @Param("dataNascimento") Date dataNascimento);
 

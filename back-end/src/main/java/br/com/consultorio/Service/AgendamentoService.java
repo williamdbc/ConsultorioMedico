@@ -62,7 +62,6 @@ public class AgendamentoService {
         isScheduleAvailable(agendamento);
 
         agendamento.setId(id);
-        
         agendamentoRepository.save(agendamento);
         
         return agendamentoMapper.toDto(agendamento);
