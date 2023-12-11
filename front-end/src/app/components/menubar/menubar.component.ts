@@ -62,6 +62,13 @@ export class MenubarComponent implements OnInit{
         command: () => {
           this.router.navigate(['/gerenciarConsultas']);
         }
+      },
+      {
+        label: 'Acessar Consultas',
+        icon: 'pi pi-cog',
+        command: () => {
+          this.router.navigate(['/cadastros/AcessarConsulta']);
+        }
       }
     ];
 

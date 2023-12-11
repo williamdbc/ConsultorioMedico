@@ -82,4 +82,13 @@ export class ConsultasService {
     }));
 
   }
+
+  findConsultaByPaciente(cpf: any, birthDateString: any){
+    return this.http.get<any[]>(`${this.API}/consultas/acessar`  + '?cpf=' +  cpf + '&birthDateString=' + birthDateString)
+    .pipe(map((res: any[]) => {
+         console.log('res', res)
+        let result = [...res];
+        return result;
+  }));
+  }
 }

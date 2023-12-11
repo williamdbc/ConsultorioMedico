@@ -35,6 +35,10 @@ export class CreateGenericComponent implements OnInit{
   selectedPaciente: any;
   selectedRecepcionista: any;
 
+  tipoStatusConsulta = ['AGENDADA', 'REALIZADA'];
+  selectedStatusConsulta: any;
+
+
   entidade: any;
 
   constructor(private fb:FormBuilder,

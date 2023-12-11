@@ -1,3 +1,6 @@
+
+
+
 <ng-container *ngIf="nomeEntidade == 'Agendamentos'">
   <div class="card mt-2">
     <div style="display: flex; gap: 1rem;">
@@ -27,12 +30,34 @@
 
 <div class="flex flex-row justify-between align-center">
   <h1>{{nomeEntidade}}</h1>
-  <p-button label="Cadastrar" styleClass="p-button-success" (onClick)="openModal()"></p-button>
+  <p-button *ngIf="nomeEntidade !='Consultas' && nomeEntidade != 'Acessar Consulta'" label="Cadastrar" styleClass="p-button-success" (onClick)="openModal()"></p-button>
 </div>
+
+<ng-container *ngIf="nomeEntidade == 'Acessar Consulta'">
+  <div class="card mt-2 " style="margin-bottom: 1rem;">
+    <div style="display: flex; gap: 1rem;">
+      <h3 style="position: relative; bottom: 7px;">Código:</h3>
+      <input [(ngModel)]="codigoFilter" pInputText type="text">
+      <h3 style="position: relative; bottom: 7px;">Senha:</h3>
+
+      <input [(ngModel)]="senhaFilter" pInputText type="text">
+
+      <p-button (click)="pesquisarConsulta()">Pesquisar</p-button>
+    </div>
+  </div>
+</ng-container>
 
 <p-table [columns]="cols" [value]="results" [tableStyle]="{ 'min-width': '50rem' }">
   <ng-template pTemplate="header" let-columns>
       <tr>
+        <ng-container *ngIf="nomeEntidade == 'Consultas'">
+          <th>Inicio </th>
+          <th>Fim </th>
+          <th>Medico </th>
+          <th>Paciente </th>
+          
+        </ng-container>
+
         <ng-container *ngFor="let col of columns" >
           <th *ngIf="col.isShow">{{ col.header }}</th>
         </ng-container>
@@ -42,11 +67,21 @@
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-columns="columns">
       <tr>
+        <ng-container *ngIf="nomeEntidade == 'Consultas' || nomeEntidade == 'Acessar Consultas' ">
+          <td>{{rowData.agendamento.data_hora_inicio | date:'dd/MM/yyyy HH:mm'}} </td>
+          <td>{{rowData.agendamento.data_hora_fim | date:'dd/MM/yyyy HH:mm'}} </td>
+          <td>{{rowData.agendamento.medico.nome_completo}} </td>
+          <td>{{rowData.agendamento.paciente.nome_completo}} </td>
+          
+        </ng-container>
+        
         <ng-container *ngFor="let col of columns">
           <td *ngIf="col.isShow && col.type === 'date'"> {{ rowData[col.field] | date:'dd/MM/yyyy HH:mm' }}</td>
-          <td *ngIf="col.isShow && col.type !== 'date' && col.type !== 'medico'
+
+          <td *ngIf="col.isShow && nomeEntidade != 'Acessar Consulta' && col.type !== 'date' && col.type !== 'medico'
           && col.type !== 'recepcionista' && col.type !== 'paciente'"> {{ rowData[col.field] }}</td>
-          <td *ngIf="col.isShow && (col.type == 'medico' || col.type == 'recepcionista' || col.type == 'paciente' )">{{rowData[col.type].nome_completo}}</td>
+
+          <td *ngIf="col.isShow && nomeEntidade != 'Acessar Consulta' && (col.type == 'medico' || col.type == 'recepcionista' || col.type == 'paciente' )">{{rowData[col.type].nome_completo}}</td>
         </ng-container>
 
         <td>

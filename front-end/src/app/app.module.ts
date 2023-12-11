@@ -24,6 +24,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { GerenciarConsultasComponent } from './components/gerenciar-consultas/gerenciar-consultas.component';
 import { ShowGenericComponent } from './components/cadastros/show-generic/show-generic.component';
+import { AcessarConsultasComponent } from './components/acessar-consultas/acessar-consultas.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +34,7 @@ import { ShowGenericComponent } from './components/cadastros/show-generic/show-g
     CreateGenericComponent,
     GerenciarConsultasComponent,
     ShowGenericComponent,
+    AcessarConsultasComponent,
   ],
   imports: [
     BrowserAnimationsModule,

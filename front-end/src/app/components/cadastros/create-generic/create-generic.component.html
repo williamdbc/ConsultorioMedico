@@ -57,6 +57,12 @@
           ></p-dropdown>
         </ng-container>
 
+        <ng-container *ngSwitchCase="'status'">
+          <p-dropdown [options]="tipoStatusConsulta" [(ngModel)]="selectedStatusConsulta" [placeholder]="idEntidade <= 0 ? 'Selecione um Recepcionista': ''" 
+          formControlName="{{ atributo.field }}" id="{{ atributo.field }}" name="{{ atributo.field }}"
+          ></p-dropdown>
+        </ng-container>
+
       </ng-container>
 
       <!-- Exibir mensagem de erro apenas após o envio do formulário -->

@@ -21,6 +21,8 @@ export class CadastrosComponent implements OnInit{
   dataFinal: Date = new Date();
   tipo: string = '';
   nomeFiltro: string = '';
+  codigoFilter: string = '';
+  senhaFilter: string = '';
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -88,9 +90,18 @@ export class CadastrosComponent implements OnInit{
       case 'Paciente':
         nome = 'Pacientes';
         break;
+      case 'AcessarConsulta':
+          nome = 'Acessar Consulta';
+        break;
     }
 
     return nome;
+  }
+
+  pesquisarConsulta(){
+    this.consultasService.findConsultaByPaciente(this.codigoFilter, this.senhaFilter).subscribe(resp => {
+      this.results = resp;
+    })
   }
    
   formatarData(data: Date): string {
@@ -134,6 +145,9 @@ export class CadastrosComponent implements OnInit{
       case 'Paciente':
           rota = '/pacientes';
           break;
+      case 'AcessarConsulta':
+          rota = '';
+          break;
     }
 
     return rota;
@@ -175,7 +189,8 @@ export class CadastrosComponent implements OnInit{
         cols = [
           { field: 'sintomas', header: 'Sintomas', type: 'text'  , isShow: true},
           { field: 'diagnostico', header: 'Diagnóstico', type: 'text'  , isShow: true},
-          { field: 'status_consulta', header: 'Status', type: 'text'  , isShow: true},
+          { field: 'observacoes', header: 'Observações', type: 'text'  , isShow: true},
+          { field: 'status_consulta', header: 'Status', type: 'status'  , isShow: true},
         ];
         break;
       case 'Paciente':
@@ -187,6 +202,18 @@ export class CadastrosComponent implements OnInit{
           { field: 'data_nascimento', header: 'Data de Nascimento', type: 'date' , isShow: true},
         ];
         break;
+      case 'AcessarConsulta':
+          cols = [
+            { field: 'data_hora_inicio', header: 'Inicio', type: 'date' , isShow: true},
+            { field: 'data_hora_fim', header: 'Fim', type: 'date'  , isShow: true},
+            { field: 'medico', header: 'Médico', type: 'medico'  , isShow: true},
+            { field: 'paciente', header: 'Paciente', type: 'paciente'  , isShow: true},
+            { field: 'sintomas', header: 'Sintomas', type: 'text'  , isShow: true},
+            { field: 'diagnostico', header: 'Diagnóstico', type: 'text'  , isShow: true},
+            { field: 'observacoes', header: 'Observações', type: 'text'  , isShow: true},
+            { field: 'status_consulta', header: 'Status', type: 'status'  , isShow: true},
+          ];
+          break;
     }
 
     console.log('cols', cols)
