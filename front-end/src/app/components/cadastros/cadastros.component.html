@@ -62,7 +62,7 @@
           <th *ngIf="col.isShow">{{ col.header }}</th>
         </ng-container>
 
-        <th >Ações</th>
+        <th *ngIf="nomeEntidade != 'Acessar Consulta'">Ações</th>
       </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -72,6 +72,20 @@
           <td>{{rowData.agendamento.data_hora_fim | date:'dd/MM/yyyy HH:mm'}} </td>
           <td>{{rowData.agendamento.medico.nome_completo}} </td>
           <td>{{rowData.agendamento.paciente.nome_completo}} </td>
+          
+        </ng-container>
+
+        <ng-container *ngIf="nomeEntidade == 'Acessar Consulta' || nomeEntidade == 'Acessar Consultas' ">
+          <td>{{rowData.agendamento.data_hora_inicio | date:'dd/MM/yyyy HH:mm'}} </td>
+          <td>{{rowData.agendamento.data_hora_fim | date:'dd/MM/yyyy HH:mm'}} </td>
+          <td>{{rowData.agendamento.recepcionista.nome_completo}} </td>
+          <td>{{rowData.agendamento.medico.nome_completo}} </td>
+          <td>{{rowData.agendamento.paciente.nome_completo}} </td>
+          <td>{{rowData.sintomas}} </td>
+          <td>{{rowData.diagnostico}} </td>
+          <td>{{rowData.observacoes}} </td>
+          <td>{{rowData.status_consulta}} </td>
+          <td>{{rowData.agendamento.valor_consulta}}</td>
           
         </ng-container>
         
@@ -84,7 +98,7 @@
           <td *ngIf="col.isShow && nomeEntidade != 'Acessar Consulta' && (col.type == 'medico' || col.type == 'recepcionista' || col.type == 'paciente' )">{{rowData[col.type].nome_completo}}</td>
         </ng-container>
 
-        <td>
+        <td *ngIf="nomeEntidade != 'Acessar Consulta'">
           <p-button label="Editar" class="mr-1" styleClass="p-button-warning" (onClick)="editarEntidade(rowData)"></p-button>
           <p-button label="Excluir" styleClass="p-button-danger" (onClick)="showConfirmationToDelete(rowData)"></p-button>
         </td>

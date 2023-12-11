@@ -206,12 +206,14 @@ export class CadastrosComponent implements OnInit{
           cols = [
             { field: 'data_hora_inicio', header: 'Inicio', type: 'date' , isShow: true},
             { field: 'data_hora_fim', header: 'Fim', type: 'date'  , isShow: true},
+            { field: 'recepcionista', header: 'Recepcionista', type: 'recepcionista' , isShow: true},
             { field: 'medico', header: 'Médico', type: 'medico'  , isShow: true},
             { field: 'paciente', header: 'Paciente', type: 'paciente'  , isShow: true},
             { field: 'sintomas', header: 'Sintomas', type: 'text'  , isShow: true},
             { field: 'diagnostico', header: 'Diagnóstico', type: 'text'  , isShow: true},
             { field: 'observacoes', header: 'Observações', type: 'text'  , isShow: true},
-            { field: 'status_consulta', header: 'Status', type: 'status'  , isShow: true},
+            { field: 'status_consulta', header: 'Status', type: 'text'  , isShow: true},
+            { field: 'valor_consulta', header: 'Valor da Consulta', type: 'number'  , isShow: true},
           ];
           break;
     }
