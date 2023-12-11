@@ -47,6 +47,11 @@ public class ConsultaService {
 
     public List<ConsultaDTO> findConsultaByPaciente(String cpf, String birthDateString){
         Date birthDate = parseDate(birthDateString);
+
+        if(!consultaRepository.existsByCPF(cpf)){
+            throw new BusinessException("CPF não está cadastrado ou é invalido.");
+        }
+
         return consultaMapper.toDto(consultaRepository.findConsultaByPaciente(cpf,birthDate));
     }
 

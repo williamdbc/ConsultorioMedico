@@ -13,6 +13,7 @@ public class ConsultaDTO {
     private AgendamentoDTO agendamento;
     private String sintomas;
     private String diagnostico;
+    private String observacoes;
     private String status_consulta;
 
     @JsonIgnore

@@ -16,6 +16,9 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Long> {
     @Query("SELECT c.status_consulta FROM Consulta c WHERE c.agendamento.id = :idAgendamento")
     ConsultaEnum findStatusConsultaByAgendamento(Long idAgendamento);
 
+    @Query("SELECT COUNT(pa) > 0 FROM Paciente pa WHERE pa.CPF = :cpf")
+    boolean existsByCPF(@Param("cpf") String cpf);
+
 
     @Query("SELECT c FROM Consulta c " +
             "JOIN c.agendamento a " +
