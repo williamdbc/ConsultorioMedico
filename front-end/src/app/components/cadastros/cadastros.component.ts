@@ -38,20 +38,36 @@ export class CadastrosComponent implements OnInit{
       this.getAll(params['tipo'])
     });
 
+
+  }
+
+  setDatasSemana() {
+    const hoje = new Date();
+    const inicioDaSemana = new Date(hoje);
+    inicioDaSemana.setDate(hoje.getDate() - hoje.getDay());
+
+    const finalDaSemana = new Date(hoje);
+    finalDaSemana.setDate(hoje.getDate() + (6 - hoje.getDay()));
+    finalDaSemana.setHours(23, 59, 59, 999);
+
+    this.dataInicial = inicioDaSemana;
+    this.dataFinal = finalDaSemana;
   }
 
   getAll(tipo: string){
-    this.consultasService.getAll(this.getRota(tipo) + '/listar').subscribe(resp => {
-      if(resp){
-        this.results = resp;
-      }
-    });
+    if(this.nomeEntidade != 'Agendamentos'){
+      this.consultasService.getAll(this.getRota(tipo) + '/listar').subscribe(resp => {
+        if(resp){
+          this.results = resp;
+        }
+      });
+    }else{
+      this.findAgendamentoBetweenDates();
+    }
   }
 
   aplicarFiltro() {
-    this.consultasService.findByNome(this.nomeFiltro, this.rota + '/nome').subscribe(resp => {
-      this.results = resp;
-    });
+    this.findAgendamentoBetweenDates();
   }
 
   getNome(tipo: string): string{
@@ -76,6 +92,27 @@ export class CadastrosComponent implements OnInit{
 
     return nome;
   }
+   
+  formatarData(data: Date): string {
+    const ano = data.getFullYear();
+    const mes = (data.getMonth() + 1).toString().padStart(2, '0');
+    const dia = data.getDate().toString().padStart(2, '0');
+    const horas = data.getHours().toString().padStart(2, '0');
+    const minutos = data.getMinutes().toString().padStart(2, '0');
+    const segundos = data.getSeconds().toString().padStart(2, '0');
+  
+    return `${ano}-${mes}-${dia} 00:00:00`;
+  }
+
+  findAgendamentoBetweenDates(){
+    // console.log('this.dataInicial', this.dataInicial);
+    // console.log('this.dataFinal', this.dataFinal)
+    this.consultasService.findAgendamentoBetweenDates(this.rota + '/buscar', this.formatarData(this.dataInicial), this.formatarData(this.dataFinal)).subscribe(resp => {
+      if(resp){
+        this.results = resp;
+      }
+    });
+  }
 
   getRota(tipo: string): string{
     let rota = '';
@@ -88,6 +125,7 @@ export class CadastrosComponent implements OnInit{
         rota = '/recepcionistas'
         break;
       case 'Agendamento':
+        this.setDatasSemana();
         rota = '/agendamentos';
         break;
       case 'Consulta':

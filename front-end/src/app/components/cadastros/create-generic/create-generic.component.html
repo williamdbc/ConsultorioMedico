@@ -12,7 +12,7 @@
         <input *ngSwitchCase="'number'" pInputText type="number" class="form-control flex-grow-1"
           formControlName="{{ atributo.field }}" id="{{ atributo.field }}" name="{{ atributo.field }}">
 
-        <input *ngSwitchCase="'date'" pInputText type="date" class="form-control flex-grow-1"
+        <input *ngSwitchCase="'date'" pInputText type="datetime-local" class="form-control flex-grow-1"
           formControlName="{{ atributo.field }}" id="{{ atributo.field }}" name="{{ atributo.field }}">
 
         <ng-container *ngSwitchCase="'ator'">

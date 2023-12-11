@@ -92,11 +92,22 @@ export class CreateGenericComponent implements OnInit{
     this.consultasService.getById(this.idEntidade, this.rota).subscribe(resp => {
       if(resp){
         this.entidade = resp;
+        if(this.nomeEntidade == 'Agendamentos'){
+          this.entidade.data_hora_fim = this.extrairData(resp.data_hora_fim);
+          this.entidade.data_hora_inicio = this.extrairData(resp.data_hora_inicio);
+        }
         this.preencherForm(this.entidade);
         this.getAllEntidades();
       }
     });
   }
+
+  extrairData(dataStr: any) {
+    const dataObj = new Date(dataStr);
+    const dataApenas = dataObj.toISOString().slice(0, 16); // Obtém a data e a hora até os minutos
+    return dataApenas;
+  }
+
 
   preencherForm(entity: any){
 

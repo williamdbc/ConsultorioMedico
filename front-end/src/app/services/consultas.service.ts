@@ -41,12 +41,27 @@ export class ConsultasService {
     return this.http.delete(`${this.API}${rota}/${id}`);
   }
 
-  update(obj: any, rota: string, id: number){
-    return this.http.put(`${this.API}${rota}/${id}`, obj).pipe(map((res: any) => {
-      return res;
-    }));
+  update(obj: any, rota: string, id: number) {
+    return this.http.put(`${this.API}/${rota}/${id}`, obj).pipe(
+      map((res: any) => {
+        return res;
+      }),
+      catchError(error => {
+        this.handleError(error);
+        return throwError(error);
+      })
+    );
   }
 
+  findAgendamentoBetweenDates(rota: string, dataInicial: any, dataFinal: any){
+    return this.http.get<any[]>(`${this.API}` + rota + '?startDateTime=' +  dataInicial + '&endDateTime=' + dataFinal)
+    .pipe(map((res: any[]) => {
+         console.log('res', res)
+        let result = [...res];
+        return result;
+    }));
+  }
+  
   private handleError(error: any): Observable<never> {
     let errorMessage = 'Ocorreu um erro no serviço.';
 

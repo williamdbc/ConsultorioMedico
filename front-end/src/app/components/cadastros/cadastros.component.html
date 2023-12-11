@@ -2,10 +2,11 @@
   <div class="card mt-2">
     <div style="display: flex; gap: 1rem;">
       <h3 style="position: relative; bottom: 7px;">Data Inicial:</h3>
-      <p-calendar [(ngModel)]="dataInicial" [showIcon]="true"></p-calendar>
+      <p-calendar [(ngModel)]="dataInicial" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
 
       <h3 style="position: relative; bottom: 7px;">Data Final:</h3>
-      <p-calendar [(ngModel)]="dataFinal" [showIcon]="true"></p-calendar>
+
+      <p-calendar [(ngModel)]="dataFinal" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
 
       <p-button (click)="aplicarFiltro()">Filtrar</p-button>
     </div>
@@ -42,10 +43,10 @@
   <ng-template pTemplate="body" let-rowData let-columns="columns">
       <tr>
         <ng-container *ngFor="let col of columns">
-          <td *ngIf="col.type === 'date'"> {{ rowData[col.field] | date:'dd/MM/yyyy' }}</td>
+          <td *ngIf="col.isShow && col.type === 'date'"> {{ rowData[col.field] | date:'dd/MM/yyyy HH:mm' }}</td>
           <td *ngIf="col.isShow && col.type !== 'date' && col.type !== 'medico'
           && col.type !== 'recepcionista' && col.type !== 'paciente'"> {{ rowData[col.field] }}</td>
-          <td *ngIf="col.isShow && col.type "></td>
+          <td *ngIf="col.isShow && (col.type == 'medico' || col.type == 'recepcionista' || col.type == 'paciente' )">{{rowData[col.type].nome_completo}}</td>
         </ng-container>
 
         <td>
