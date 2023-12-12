@@ -61,7 +61,7 @@ export class ConsultasService {
         return result;
     }));
   }
-  
+
   private handleError(error: any): Observable<never> {
     let errorMessage = 'Ocorreu um erro no serviço.';
 
@@ -77,7 +77,8 @@ export class ConsultasService {
   }
 
   findByNome(nome: string, rota: string): Observable<any> {
-    return this.http.get(`${this.API}${rota}/${nome}`).pipe(map((res: any) => {
+    console.log('rota', rota)
+    return this.http.get(`${this.API}${rota}${nome}`).pipe(map((res: any) => {
       return res;
     }));
 

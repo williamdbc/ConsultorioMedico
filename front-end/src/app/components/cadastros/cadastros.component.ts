@@ -72,6 +72,12 @@ export class CadastrosComponent implements OnInit{
     this.findAgendamentoBetweenDates();
   }
 
+  aplicarFiltroPorNome(){
+    this.consultasService.findByNome(this.nomeFiltro, this.rota  + '/nome?nome=').subscribe(resp => {
+      if(resp) this.results = resp;
+    })
+  }
+
   getNome(tipo: string): string{
     let nome = '';
     switch(tipo){
@@ -103,7 +109,7 @@ export class CadastrosComponent implements OnInit{
       this.results = resp;
     })
   }
-   
+
   formatarData(data: Date): string {
     const ano = data.getFullYear();
     const mes = (data.getMonth() + 1).toString().padStart(2, '0');
@@ -111,7 +117,7 @@ export class CadastrosComponent implements OnInit{
     const horas = data.getHours().toString().padStart(2, '0');
     const minutos = data.getMinutes().toString().padStart(2, '0');
     const segundos = data.getSeconds().toString().padStart(2, '0');
-  
+
     return `${ano}-${mes}-${dia} 00:00:00`;
   }
 

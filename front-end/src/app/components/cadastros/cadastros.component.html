@@ -23,7 +23,7 @@
       <h3 style="position: relative; bottom: 7px;">Nome:</h3>
       <input pInputText type="text" [(ngModel)]="nomeFiltro" >
 
-      <p-button (click)="aplicarFiltro()">Filtrar</p-button>
+      <p-button (click)="aplicarFiltroPorNome()">Filtrar</p-button>
     </div>
   </div>
 </ng-container>
@@ -55,7 +55,7 @@
           <th>Fim </th>
           <th>Medico </th>
           <th>Paciente </th>
-          
+
         </ng-container>
 
         <ng-container *ngFor="let col of columns" >
@@ -72,7 +72,7 @@
           <td>{{rowData.agendamento.data_hora_fim | date:'dd/MM/yyyy HH:mm'}} </td>
           <td>{{rowData.agendamento.medico.nome_completo}} </td>
           <td>{{rowData.agendamento.paciente.nome_completo}} </td>
-          
+
         </ng-container>
 
         <ng-container *ngIf="nomeEntidade == 'Acessar Consulta' || nomeEntidade == 'Acessar Consultas' ">
@@ -86,9 +86,9 @@
           <td>{{rowData.observacoes}} </td>
           <td>{{rowData.status_consulta}} </td>
           <td>{{rowData.agendamento.valor_consulta}}</td>
-          
+
         </ng-container>
-        
+
         <ng-container *ngFor="let col of columns">
           <td *ngIf="col.isShow && col.type === 'date'"> {{ rowData[col.field] | date:'dd/MM/yyyy HH:mm' }}</td>
 
